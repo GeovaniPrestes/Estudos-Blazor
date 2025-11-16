@@ -62,10 +62,21 @@
             </tbody>
         </table>
     </div>
+    <h3 class="text-bg-primary"> 
+        Products Sumary
+    </h3>
+    @foreach (var product in productsList)
+    {
+        <div class="col-3">
+            <div class="border p-1 m-1">
+                <h5 class="text-primary">@product.Name</h5>
+                <p>Price: @product.Price <br />
+                Is active: @(product.IsActive ? "Active" : "InActive")</p>
+            </div>
+        </div>
+    }
+    
 </div>
-   
-
-
 
 @code {
     private string selectedProp = "";
@@ -102,6 +113,31 @@
                         new ProductProp{Id= 1, Key = "Flavor", Value = "Apple"}
                     }
             });
-
+        productsList.Add(new()
+        {
+            IdProduct = 3,
+            Name = "Pear",
+            IsActive = false,
+            Price = 4,
+            ProductProp = new List<ProductProp>()
+                    {
+                        new ProductProp{Id= 1, Key = "Color", Value = "Red"},
+                        new ProductProp{Id= 1, Key = "Size", Value = "20cm"},
+                        new ProductProp{Id= 1, Key = "Flavor", Value = "Apple"}
+                    }
+        });
+        productsList.Add(new()
+        {
+            IdProduct = 4,
+            Name = "Pineapple",
+            IsActive = false,
+            Price = 4,
+            ProductProp = new List<ProductProp>()
+                    {
+                        new ProductProp{Id= 1, Key = "Color", Value = "Red"},
+                        new ProductProp{Id= 1, Key = "Size", Value = "20cm"},
+                        new ProductProp{Id= 1, Key = "Flavor", Value = "Apple"}
+                    }
+        });
     }
 }

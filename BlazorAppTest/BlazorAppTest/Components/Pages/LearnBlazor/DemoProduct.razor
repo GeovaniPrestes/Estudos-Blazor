@@ -1,0 +1,71 @@
+﻿@page "/LearnBlazor/DemoProduct";
+
+<div class="row">
+    <h3 class="text-bg-primary">Demo Product</h3>
+    @for (int i = 0; i < listProducts.Count; i++)
+    {
+        var product = listProducts[i];
+        <div class="col-6 border bg-body-secondary p-1">
+            <h4 class="text-primary">
+                Product - @(i + 1)
+            </h4>
+            Name - @product.Name <br />
+            Show properties: <input type="checkbox" @bind="product.ShowProperties" />
+            @if(product.ShowProperties)
+            {
+                @foreach(var propertie in product.ProductProp)
+                {
+                    <p>@propertie.Key : @propertie.Value</p>
+                }
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<Product> listProducts = new();
+
+    protected override void OnInitialized()
+    {
+        listProducts.Add(new()
+        {
+            IdProduct = 2,
+            Name = "Apple",
+            IsActive = false,
+            Price = 4,
+            ShowProperties = true,
+            ProductProp = new List<ProductProp>()
+                    {
+                        new ProductProp{Id= 1, Key = "Color", Value = "Red"},
+                        new ProductProp{Id= 1, Key = "Size", Value = "20cm"},
+                        new ProductProp{Id= 1, Key = "Flavor", Value = "Apple"}
+                    }
+        });
+        listProducts.Add(new()
+        {
+            IdProduct = 3,
+            Name = "Pear",
+            IsActive = false,
+            Price = 4,
+            ProductProp = new List<ProductProp>()
+                    {
+                        new ProductProp{Id= 1, Key = "Color", Value = "Red"},
+                        new ProductProp{Id= 1, Key = "Size", Value = "20cm"},
+                        new ProductProp{Id= 1, Key = "Flavor", Value = "Apple"}
+                    }
+        });
+        listProducts.Add(new()
+        {
+            IdProduct = 4,
+            Name = "Pineapple",
+            IsActive = false,
+            Price = 4,
+            ProductProp = new List<ProductProp>()
+                    {
+                        new ProductProp{Id= 1, Key = "Color", Value = "Red"},
+                        new ProductProp{Id= 1, Key = "Size", Value = "20cm"},
+                        new ProductProp{Id= 1, Key = "Flavor", Value = "Apple"}
+                    }
+        });
+    }
+}
