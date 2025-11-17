@@ -2,14 +2,21 @@
 
 <div class="row">
     <h3 class="text-bg-primary">Demo Product</h3>
+    <p>Favorite Count: @FavoriteCount</p>
     @foreach(var product in listProducts)
     {
-        <_IndividualProductComponent Product="product"></_IndividualProductComponent>
+        <_IndividualProductComponent Product="product" OnFavoriteUpdated="FavoriteCountChange"
+            OnSelectedProductChange="UpdateSelectedProduct"></_IndividualProductComponent>
     }
+</div>
+<div class="row">
+    <h4>@(string.IsNullOrWhiteSpace(SelectedProduct)? string.Empty: SelectedProduct)</h4>
 </div>
 
 @code {
     private List<Product> listProducts = new();
+    public int FavoriteCount { get; set; } = 0;
+    public string SelectedProduct { get; set; } = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -54,4 +61,8 @@
                     }
         });
     }
+
+    protected void UpdateSelectedProduct(string productName) => SelectedProduct = productName;
+
+    protected void FavoriteCountChange(bool isSelected) => FavoriteCount += isSelected ? 1 : -1;
 }

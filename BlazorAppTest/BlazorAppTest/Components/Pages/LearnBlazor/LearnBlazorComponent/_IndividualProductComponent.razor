@@ -1,7 +1,10 @@
-﻿<div class="col-6 border bg-body-secondary p-1">
+﻿<div class="col-6 border bg-body-secondary p-1" @onclick="() => ChangeFavoriteProduct(Product.Name)">
     <h4 class="text-primary">
         Product - @Product.IdProduct
     </h4>
+
+    <input type="checkbox" @onchange="FavoriteUpdated"/> Add to Favorites
+
     Name - @Product.Name <br />
     Show properties: <input type="checkbox" @bind="Product.ShowProperties" />
     @if (Product.ShowProperties)
@@ -17,4 +20,15 @@
 @code {
     [Parameter]
     public Product Product { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<bool> OnFavoriteUpdated{ get; set; }
+    [Parameter]
+    public EventCallback<string> OnSelectedProductChange { get; set; }
+
+    public async Task ChangeFavoriteProduct(string productName) => 
+        await OnSelectedProductChange.InvokeAsync(productName);
+
+    public async Task FavoriteUpdated(ChangeEventArgs e) => 
+        await OnFavoriteUpdated.InvokeAsync(e.Value is null ? false : (bool)e.Value);
 }
